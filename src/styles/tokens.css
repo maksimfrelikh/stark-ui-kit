@@ -1,0 +1,175 @@
+/* ============================================================
+   stark-ui-kit — portable token + base layer
+   ------------------------------------------------------------
+   Structural tokens only (radii, motion, z-index, type-scale,
+   weights, label system, rhythm) + a normalisation / a11y base.
+
+   BRAND IS A CONTRACT, NOT A VALUE. Semantic colours and font
+   roles resolve through `var(--brand-*, <generic fallback>)`:
+   the consumer supplies its palette / fonts / themes by setting
+   the --brand-* custom properties (e.g. on :root or [data-theme]);
+   if unset, a neutral fallback applies. No brand values ship here.
+   ============================================================ */
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+/* scrollbar-gutter: stable reserves the scrollbar track at all times, so a centred
+   layout sits in the same place whether a page scrolls or not. scrollLock relies on
+   this reservation (see src/lib/scrollLock.ts). */
+html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
+body { min-height: 100vh; min-height: 100dvh; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+ul { list-style: none; }
+
+/* Smooth in-page scrolling only when the user hasn't asked for reduced motion
+   (SC 2.3.3). In reduce, the default (auto/instant) jump applies. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* ---------- Tokens ---------- */
+:root {
+  /* semantic colour contract — set --brand-* to theme; fallbacks are GENERIC neutrals,
+     deliberately not any particular brand palette. */
+  --bg:        var(--brand-bg,     #ffffff);
+  --fg:        var(--brand-fg,     #111111);
+  --muted:     var(--brand-muted,  #666666);
+  --faint:     var(--brand-faint,  #757575);
+  --line:      var(--brand-line,   #e4e4e4);
+  --line-2:    var(--brand-line-2, #cfcfcf);
+  --ink:       var(--brand-ink,    #111111);   /* strong rules / inverted blocks */
+  --ink-fg:    var(--brand-ink-fg, #ffffff);
+
+  /* radius scale — theme-independent; keep new corners on these steps. */
+  --r-xs:     2px;     /* hairline: focus ring, thin bars, inline tags */
+  --r-sm:     6px;     /* chips, inputs, small buttons */
+  --r-md:     10px;    /* cards, overlays, modal & palette containers */
+  --r-pill:   999px;   /* pills & lozenge buttons */
+  --r-circle: 50%;     /* dots */
+
+  /* stacking order — one ladder for every layer. */
+  --z-below:   -1;     /* decorative pseudo behind its box */
+  --z-nav:     50;     /* sticky nav */
+  --z-skip:    100;    /* skip-to-content link (above nav when focused) */
+  --z-overlay: 200;    /* command palette, reading-progress bar */
+  --z-modal:   220;    /* dialog (above the palette overlay) */
+
+  /* typography — font ROLES as contract (no brand families; generic fallback stacks). */
+  --font-grotesk: var(--brand-font-grotesk, "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif);
+  --font-mono:    var(--brand-font-mono, ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace);
+  --font-display: var(--brand-font-display, var(--font-grotesk));
+  --font-body:    var(--brand-font-body, var(--font-grotesk));
+  --font-meta:    var(--brand-font-meta, var(--font-grotesk));
+
+  /* weights */
+  --w-display: 600;
+  --w-name:    600;
+  --w-strong:  600;
+
+  /* tracking / case for labels */
+  --label-case: uppercase;
+  --label-track: 0.12em;
+  --label-font: var(--brand-font-label, var(--font-grotesk));
+  --label-weight: 600;
+
+  /* scale multiplier (tweakable) */
+  --scale: 1;
+
+  /* rhythm */
+  --maxw: 1200px;
+  --gut: clamp(20px, 5vw, 72px);
+
+  /* fluid type, multiplied by --scale */
+  --t-mega:  calc(clamp(3rem, 11vw, 9rem)   * var(--scale));
+  --t-h1:    calc(clamp(2.4rem, 6vw, 4.6rem) * var(--scale));
+  --t-h2:    calc(clamp(1.7rem, 3.2vw, 2.6rem) * var(--scale));
+  --t-h3:    calc(clamp(1.2rem, 1.8vw, 1.5rem) * var(--scale));
+  --t-lead:  calc(clamp(1.1rem, 1.6vw, 1.45rem) * var(--scale));
+  --t-body:  calc(clamp(1rem, 1.1vw, 1.1rem) * var(--scale));
+  --t-meta:  calc(clamp(0.78rem, 0.9vw, 0.9rem) * var(--scale));
+
+  /* ---- motion language ----------------------------------------------------
+     One curve for things that MOVE, one for pure fades; three duration steps.
+     Rewrite rule: movement (transform / position / clip) → var(--ease-out);
+     colour & opacity fades → var(--ease-soft). The blanket prefers-reduced-motion
+     reset further down zeroes these automatically. */
+  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1); /* anything that moves */
+  --ease-soft: ease;                            /* pure colour / opacity fades */
+  --dur-fast:  120ms;  /* hovers, colour fades */
+  --dur-base:  160ms;  /* reveal underline, header, modals */
+  --dur-slow:  280ms;  /* flips (toggles, icons) */
+}
+
+/* ---------- Base body ---------- */
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--ink); color: var(--ink-fg); }
+
+/* ---------- Scrollbars — themed, thumb only (no arrow buttons) ----------
+   Note: macOS overlay scrollbars ignore CSS for the page itself; these
+   reliably apply inside scroll panels and on Windows/Linux/Chrome. ------- */
+* { scrollbar-width: thin; scrollbar-color: var(--faint) transparent; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--line-2);
+  border-radius: var(--r-sm);
+  border: 3px solid var(--bg);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--faint); }
+::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+::-webkit-scrollbar-corner { background: var(--bg); }
+
+/* ---------- Keyboard focus (subtle, monochrome, accessibility) ---------- */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
+}
+
+/* skip-to-content link, visible only when focused */
+.skip-link {
+  position: absolute; left: 50%; top: 8px; transform: translateX(-50%) translateY(-200%);
+  z-index: var(--z-skip); background: var(--ink); color: var(--ink-fg);
+  padding: 9px 18px; font-family: var(--label-font); font-size: var(--t-meta);
+  letter-spacing: var(--label-track); text-transform: var(--label-case);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.skip-link:focus-visible { transform: translateX(-50%) translateY(0); outline: none; }
+
+/* visually hidden, still announced by screen readers */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* Reduced motion: zero out animation/transition durations site-wide. */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* High-contrast preference — lift the quiet greys. Like the base palette this is a
+   contract: override --brand-*-contrast to theme it; fallbacks are generic neutrals. */
+@media (prefers-contrast: more) {
+  :root {
+    --muted:  var(--brand-muted-contrast,  #595959);
+    --faint:  var(--brand-faint-contrast,  #595959);
+    --line:   var(--brand-line-contrast,   #8a8a8a);
+    --line-2: var(--brand-line-2-contrast, #6e6e6e);
+  }
+}
