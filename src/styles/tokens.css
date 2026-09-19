@@ -44,6 +44,10 @@ ul { list-style: none; }
   --ink-fg:    var(--brand-ink-fg, #ffffff);
   /* edge fade for horizontally scrolling panels (code blocks, wide tables) */
   --scroll-shadow: var(--brand-scroll-shadow, rgba(0, 0, 0, 0.13));
+  /* Backdrop behind an overlay. Deliberately NOT derived from --fg: a scrim dims
+     toward black in BOTH themes — a light wash over a light page reads as fog, not
+     depth. It stays a contract so a consumer can still retune the depth. */
+  --scrim: var(--brand-scrim, color-mix(in srgb, #000 58%, transparent));
 
   /* radius scale — theme-independent; keep new corners on these steps. */
   --r-xs:     2px;     /* hairline: focus ring, thin bars, inline tags */
@@ -158,6 +162,17 @@ body {
   position: absolute; width: 1px; height: 1px;
   padding: 0; margin: -1px; overflow: hidden;
   clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* Switching theme is a change of context, not an interaction with a control, so it
+   should not cross-fade every colour on the page. Set data-theme-switching on <html>
+   immediately before flipping the theme and drop it on the next frame; everything in
+   between commits instantly. Without this, each themed property animates on its own
+   transition and the switch reads as a wash rather than a cut. */
+:root[data-theme-switching] *,
+:root[data-theme-switching] *::before,
+:root[data-theme-switching] *::after {
+  transition: none !important;
 }
 
 /* Reduced motion: zero out animation/transition durations site-wide. */
