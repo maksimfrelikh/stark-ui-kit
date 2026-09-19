@@ -63,7 +63,7 @@
      metric-matched local face against swap CLS — the consumer must declare it
      (see frelikh src/styles/app.css) or the stack simply falls through it. */
   --brand-font-grotesk: "Archivo Variable", "Archivo", "Onest Variable", "Archivo Fallback", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --brand-font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --brand-font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 
 /* ---------- Dark ---------- */
