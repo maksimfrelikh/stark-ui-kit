@@ -16,11 +16,13 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./styles.css": "./src/styles/tokens.css"
+    "./styles.css": "./src/styles/tokens.css",
+    "./theme-mono.css": "./src/styles/theme-mono.css"
   },
   "files": [
     "dist",
-    "src/styles/tokens.css"
+    "src/styles/tokens.css",
+    "src/styles/theme-mono.css"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts",

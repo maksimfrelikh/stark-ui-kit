@@ -42,6 +42,8 @@ ul { list-style: none; }
   --line-2:    var(--brand-line-2, #cfcfcf);
   --ink:       var(--brand-ink,    #111111);   /* strong rules / inverted blocks */
   --ink-fg:    var(--brand-ink-fg, #ffffff);
+  /* edge fade for horizontally scrolling panels (code blocks, wide tables) */
+  --scroll-shadow: var(--brand-scroll-shadow, rgba(0, 0, 0, 0.13));
 
   /* radius scale — theme-independent; keep new corners on these steps. */
   --r-xs:     2px;     /* hairline: focus ring, thin bars, inline tags */

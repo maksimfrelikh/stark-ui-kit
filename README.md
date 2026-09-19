@@ -5,7 +5,8 @@ normalisation/a11y base, plus headless UI utilities and thin React hooks.
 
 This package ships **structure, not brand**. Colours, fonts and themes are a contract:
 you supply them via `--brand-*` custom properties; sensible neutral fallbacks apply if you
-don't. No project-specific palette or typefaces are baked in.
+don't. No project-specific palette or typefaces are baked into the core — an optional monochrome
+theme ships alongside it (see below).
 
 ## Install
 
@@ -54,9 +55,47 @@ Tokens exposed: radii (`--r-xs/sm/md/pill/circle`), z-index ladder
 (`--z-below/nav/skip/overlay/modal`), motion (`--ease-out/-soft`, `--dur-fast/base/slow`),
 type scale (`--t-mega/h1/h2/h3/lead/body/meta`), weights (`--w-display/name/strong`),
 label system (`--label-case/track/font/weight`), rhythm (`--maxw`, `--gut`, `--scale`),
-and the semantic colour/font roles above. Base layer adds reset, `:focus-visible`,
+`--scroll-shadow` for horizontally scrolling panels, and the semantic colour/font roles above. Base layer adds reset, `:focus-visible`,
 `.sr-only`, `.skip-link`, themed scrollbars and `prefers-reduced-motion` /
 `prefers-contrast` handling.
+
+## Monochrome theme (optional)
+
+The core is brand-free. `theme-mono.css` is one concrete filling of the contract: the
+strictly monochrome house palette — black / white / grey, **no accent colour**, which is a
+deliberate design decision rather than an omission.
+
+```ts
+import 'stark-ui-kit/styles.css';      // structure + base  (always)
+import 'stark-ui-kit/theme-mono.css';  // house palette     (optional)
+```
+
+It defines `--brand-*` only, so it composes with the core instead of overriding it, and you
+can still override any single value after the import. Skip it entirely and supply your own
+`--brand-*` for a different look.
+
+Theme selection:
+
+| Host markup | Result |
+|---|---|
+| `:root` (baseline) | light |
+| `<html data-theme="dark">` | dark |
+| `<html data-theme="light">` | light |
+| no `data-theme` attribute | follows `prefers-color-scheme` |
+
+A host that always writes `data-theme` never reaches the OS branch, so adopting the theme
+cannot change its boot theme.
+
+It also sets `color-scheme` per theme, so native scrollbars, form controls and the canvas
+match without extra work.
+
+> **Source of truth: frelikh.com (`src/styles/app.css`), verbatim.** That site is the
+> reference rendering; every value here is the one it ships, high-contrast included, and its
+> appearance does not move to accommodate this package. Each value carries its contrast ratio
+> in a comment so nobody has to re-derive them. Don't take values from a screenshot, a mockup
+> or an extracted design-system artefact: three divergent copies of these greys existed before
+> this file, and the high-contrast set is exactly where they drifted apart — one of them left
+> hairlines at 1.74:1, under the 3:1 that SC 1.4.11 asks of non-text contrast.
 
 ## Utilities & hooks
 

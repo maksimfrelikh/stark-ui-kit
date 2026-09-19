@@ -1,0 +1,118 @@
+/* ============================================================
+   stark-ui-kit — monochrome brand theme (OPTIONAL)
+   ------------------------------------------------------------
+   The kit core ships structure only and reads every colour /
+   font through var(--brand-*, <generic fallback>). This file is
+   one concrete filling of that contract: the strictly MONOCHROME
+   palette — black / white / grey, NO accent colour, which is a
+   deliberate design decision, not an omission.
+
+   Import it AFTER the core if you want the house palette:
+
+       import 'stark-ui-kit/styles.css';
+       import 'stark-ui-kit/theme-mono.css';
+
+   Skip it and set your own --brand-* instead for a different look.
+
+   SOURCE OF TRUTH: frelikh.com (src/styles/app.css), verbatim and
+   without exception. That site is the reference rendering — every
+   value here is the one it ships, and its appearance does not move
+   to accommodate this file. Do not re-derive any of these from a
+   screenshot, a mockup or an extracted design-system artefact:
+   three divergent copies of these greys already existed before
+   this file, and the high-contrast set is where they drifted.
+
+   THEME SELECTION
+   - :root                        → light (the baseline)
+   - [data-theme="dark"]          → dark
+   - no data-theme at all         → follow the OS preference
+   A host that always writes data-theme (as frelikh and hushsend
+   both do) never reaches the OS branch, so adopting this file
+   cannot change their boot theme.
+   ============================================================ */
+
+/* ---------- Light (baseline) ---------- */
+:root {
+  color-scheme: light;
+
+  --brand-bg: #ffffff;
+  --brand-fg: #0b0b0b;
+  --brand-muted: #6c6c6c;
+  --brand-faint: #767676;
+  --brand-line: #e6e6e6;
+  --brand-line-2: #d4d4d4;
+  --brand-ink: #0b0b0b;      /* strong rules / inverted blocks / hover fill */
+  --brand-ink-fg: #ffffff;   /* text on --ink */
+
+  /* edge fade for horizontally scrolling panels (code blocks, wide tables) */
+  --brand-scroll-shadow: rgba(11, 11, 11, 0.13);
+
+  /* prefers-contrast: more — the kit swaps to these automatically.
+     Ratios against --brand-bg, recorded so nobody has to re-derive them.
+     NOTE for anyone adopting this file: hushsend previously carried its own
+     high-contrast greys with hairlines at 1.74:1 and borders at 2.38:1, both
+     under the 3:1 that SC 1.4.11 asks of non-text contrast. Moving onto this
+     palette fixes that. The change belongs to hushsend, not here. */
+  --brand-muted-contrast: #555555;    /*  7.46:1  AAA text       */
+  --brand-faint-contrast: #595959;    /*  7.00:1  AAA text       */
+  --brand-line-contrast: #8a8a8a;     /*  3.45:1  non-text rule  */
+  --brand-line-2-contrast: #6e6e6e;   /*  5.10:1  control border */
+
+  /* font ROLES. Latin stays Archivo; "Onest Variable" follows so the browser
+     picks it up by unicode-range for Cyrillic only. "Archivo Fallback" is a
+     metric-matched local face against swap CLS — the consumer must declare it
+     (see frelikh src/styles/app.css) or the stack simply falls through it. */
+  --brand-font-grotesk: "Archivo Variable", "Archivo", "Onest Variable", "Archivo Fallback", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --brand-font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+/* ---------- Dark ---------- */
+/* Not an inversion of light: the greys are re-picked, and the scroll shadow
+   becomes a light glow because a dark shadow is invisible on #000. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --brand-bg: #000000;
+  --brand-fg: #f2f2f2;
+  --brand-muted: #8c8c90;
+  --brand-faint: #7a7a7e;
+  --brand-line: #1b1b1d;
+  --brand-line-2: #2c2c30;
+  --brand-ink: #f2f2f2;
+  --brand-ink-fg: #000000;
+
+  --brand-scroll-shadow: rgba(242, 242, 242, 0.16);
+
+  /* ratios against --brand-bg #000000 */
+  --brand-muted-contrast: #b4b4b8;    /* 10.16:1  AAA text       */
+  --brand-faint-contrast: #a4a4a8;    /*  8.45:1  AAA text       */
+  --brand-line-contrast: #5a5a5e;     /*  3.06:1  non-text rule — tight, do not lower */
+  --brand-line-2-contrast: #707074;   /*  4.26:1  control border */
+}
+
+/* ---------- Dark by OS preference ---------- */
+/* Only for hosts that leave data-theme unset until the user picks. Kept as a
+   duplicate block rather than a shared custom-property list because the two
+   selectors must stay independently overridable. Keep it in sync with the
+   [data-theme="dark"] block above. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --brand-bg: #000000;
+    --brand-fg: #f2f2f2;
+    --brand-muted: #8c8c90;
+    --brand-faint: #7a7a7e;
+    --brand-line: #1b1b1d;
+    --brand-line-2: #2c2c30;
+    --brand-ink: #f2f2f2;
+    --brand-ink-fg: #000000;
+
+    --brand-scroll-shadow: rgba(242, 242, 242, 0.16);
+
+    --brand-muted-contrast: #b4b4b8;
+    --brand-faint-contrast: #a4a4a8;
+    --brand-line-contrast: #5a5a5e;
+    --brand-line-2-contrast: #707074;
+  }
+}
