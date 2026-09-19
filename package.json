@@ -17,12 +17,14 @@
       "require": "./dist/index.cjs"
     },
     "./styles.css": "./src/styles/tokens.css",
-    "./theme-mono.css": "./src/styles/theme-mono.css"
+    "./theme-mono.css": "./src/styles/theme-mono.css",
+    "./prose.css": "./src/styles/prose.css"
   },
   "files": [
     "dist",
     "src/styles/tokens.css",
-    "src/styles/theme-mono.css"
+    "src/styles/theme-mono.css",
+    "src/styles/prose.css"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts",

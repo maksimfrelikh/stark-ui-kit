@@ -1,0 +1,121 @@
+/* ============================================================
+   stark-ui-kit — prose (OPTIONAL)
+   ------------------------------------------------------------
+   Long-form typography for authored content: article bodies, tool
+   descriptions, FAQ answers — anywhere the markup comes from Markdown
+   and cannot carry classes of its own.
+
+       import 'stark-ui-kit/styles.css';
+       import 'stark-ui-kit/prose.css';
+
+   Everything resolves through the kit's tokens, so it themes itself.
+
+   LAYOUT MODEL: narrow text, wide media. `.prose > *` is capped at
+   --measure; the block types that earn the full track opt out. That is
+   why the cap sits on the CHILDREN and not on .prose itself — a wide
+   figure or code block can then break out without fighting a max-width
+   on its parent.
+
+   --measure is the one thing a consumer may want to set (on .prose or
+   any ancestor). The fallback is 64ch of body text frozen into rem, so
+   it does not drift when a child changes font-size.
+
+   Taken from frelikh.com, the reference rendering. Not generalised
+   beyond it: `.prose a` carries the house ink-underline here rather
+   than importing a shared mechanic, because that mechanic still has
+   exactly one consumer and inventing its API now would freeze a guess.
+   ============================================================ */
+
+.prose { max-width: none; min-width: 0; }
+.prose > * { max-width: var(--measure, 36.672rem); }
+/* the wide ones span the full track */
+.prose > header,
+.prose > pre,
+.prose > blockquote { max-width: none; }
+
+.prose-title {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--t-h1); letter-spacing: -0.025em; line-height: 1.05;
+  margin: 0.4em 0 0.5em; text-wrap: balance;
+}
+/* the lead sits inside a full-width header — cap it on its own so it does not
+   run the whole track as one long line (58ch, at its own larger size) */
+.prose-lead {
+  font-size: var(--t-lead); line-height: 1.55; color: var(--muted);
+  text-wrap: pretty; margin-bottom: 2.2em; max-width: 58ch;
+}
+
+.prose h2 {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: clamp(1.35rem, 2.1vw, 1.7rem); letter-spacing: -0.015em; line-height: 1.2;
+  margin: 2.4em 0 0.7em;
+}
+.prose p { font-size: var(--t-body); line-height: 1.68; margin: 1em 0; text-wrap: pretty; }
+
+/* Links: a quiet resting rule that the ink line flows over on hover, left to right.
+   ::after tracks single-line links only — prose links are short inline references
+   in practice. Hover is gated so touch devices don't get a stuck state. */
+.prose a { position: relative; box-shadow: inset 0 -1px 0 var(--line-2); }
+.prose a::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px;
+  background: var(--ink);
+  transition: right var(--dur-base) var(--ease-out);
+}
+@media (hover: hover) {
+  .prose a:hover::after { right: 0; }
+}
+
+.prose ul { margin: 1em 0; }
+.prose ul li { position: relative; padding-left: 1.4em; margin: 0.5em 0; line-height: 1.6; }
+.prose ul li::before { content: "—"; position: absolute; left: 0; color: var(--faint); }
+
+.prose pre {
+  border: 1px solid var(--line);
+  padding: clamp(14px, 2vw, 20px);
+  overflow-x: auto;
+  margin: 1.5em 0;
+  font-size: 0.84em;
+  line-height: 1.6;
+  /* Horizontal-scroll affordance (Lea Verou's background-attachment trick):
+     edge shadows that appear only when the block actually overflows and fade
+     out as you reach each end. Touch UAs hide the scrollbar at rest, so a
+     clipped line would otherwise give no hint that it continues. The two
+     bg-coloured cover layers (local) ride with the content and mask the
+     shadow layers (scroll) until there is somewhere left to scroll. */
+  background:
+    linear-gradient(to right, var(--bg), transparent) 0 0,
+    linear-gradient(to left, var(--bg), transparent) 100% 0,
+    radial-gradient(farthest-side at 0 50%, var(--scroll-shadow), transparent) 0 0,
+    radial-gradient(farthest-side at 100% 50%, var(--scroll-shadow), transparent) 100% 0;
+  background-repeat: no-repeat;
+  background-color: var(--bg);
+  background-size: 2.4em 100%, 2.4em 100%, 0.9em 100%, 0.9em 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+.prose pre code { font-family: var(--font-mono); }
+/* Inline code reads as a chip on every theme. Border-only on a transparent bg
+   looked like an empty input field on light themes; the color-mix fill and border
+   derive from --fg so they adapt automatically (a light wash on dark, a dark wash
+   on white). `:not(pre) > code` targets inline code only — block code keeps
+   `.prose pre`. */
+.prose :not(pre) > code {
+  font-family: var(--font-mono); font-size: 0.9em;
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+  border: 1px solid color-mix(in srgb, var(--fg) 14%, transparent);
+  border-radius: var(--r-xs); padding: 1px 5px;
+  white-space: nowrap;
+}
+
+.prose blockquote {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--t-h3); line-height: 1.4; letter-spacing: -0.01em;
+  border-left: 1px solid var(--line-2); padding-left: 1.4em;
+  margin: 1.8em 0;
+  text-wrap: pretty;
+}
+
+.prose figure { margin: 1.8em 0; }
+.prose figcaption {
+  font-family: var(--label-font); font-size: var(--t-meta); color: var(--faint);
+  letter-spacing: 0.04em; margin-top: 0.8em;
+}
