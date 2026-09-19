@@ -20,7 +20,8 @@
     "./theme-mono.css": "./src/styles/theme-mono.css",
     "./prose.css": "./src/styles/prose.css",
     "./theme-toggle.css": "./src/styles/theme-toggle.css",
-    "./lang-switch.css": "./src/styles/lang-switch.css"
+    "./lang-switch.css": "./src/styles/lang-switch.css",
+    "./command-palette.css": "./src/styles/command-palette.css"
   },
   "files": [
     "dist",
@@ -28,7 +29,8 @@
     "src/styles/theme-mono.css",
     "src/styles/prose.css",
     "src/styles/theme-toggle.css",
-    "src/styles/lang-switch.css"
+    "src/styles/lang-switch.css",
+    "src/styles/command-palette.css"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts",
