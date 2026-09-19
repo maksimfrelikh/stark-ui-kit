@@ -1,0 +1,55 @@
+/* ============================================================
+   stark-ui-kit — theme toggle (OPTIONAL)
+   ------------------------------------------------------------
+       import 'stark-ui-kit/theme-toggle.css';
+
+   Expected markup — a button holding one inline SVG, which is a circle
+   with one half filled (the light/dark metaphor). The icon rotates 180°
+   to swap which half is filled, so ONE icon serves both themes:
+
+     <button class="theme-toggle" aria-pressed="false" aria-label="…">
+       <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">…</svg>
+     </button>
+
+   Keep aria-pressed in sync with "the light theme is active" — screen
+   reader users get the state that way.
+
+   THE FLIP IS A CONTRACT, NOT A SELECTOR. The kit cannot know what a
+   consumer calls its light theme — frelikh uses [data-theme="white"],
+   an app defaulting to light uses :root, another may use
+   [data-theme="light"]. So set --theme-toggle-flip wherever LIGHT is
+   active, and the kit does the rest:
+
+     [data-theme="white"] { --theme-toggle-flip: 180deg; }   // frelikh
+     :root                { --theme-toggle-flip: 180deg; }   // light-by-default
+
+   Deliberately NOT keyed on [aria-pressed="true"], even though that
+   attribute means the same thing: it is set by script, so the icon
+   would render unrotated for the first paint and visibly snap once the
+   bundle runs. A theme selector resolved by the pre-paint bootstrap has
+   no such flash.
+   ============================================================ */
+
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 30px;
+  border: 1px solid var(--line-2); border-radius: var(--r-sm);
+  color: var(--muted);
+  transition: color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft);
+}
+@media (hover: hover) {
+  .theme-toggle:hover { color: var(--fg); border-color: var(--faint); }
+}
+
+/* the icon "flips" — same physics as an in-place copy-icon flip */
+.theme-toggle svg {
+  transition: transform var(--dur-slow) var(--ease-out);
+  transform: rotate(var(--theme-toggle-flip, 0deg));
+}
+
+/* Apple HIG (44pt) / Material (48dp). WCAG 2.2 SC 2.5.8 only asks 24px, which the
+   32x30 box already meets — this is the stricter platform floor, and only on coarse
+   pointers so desktop density is untouched. */
+@media (pointer: coarse) {
+  .theme-toggle { width: 44px; height: 44px; }
+}

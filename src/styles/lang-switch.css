@@ -1,0 +1,94 @@
+/* ============================================================
+   stark-ui-kit — language switch (OPTIONAL)
+   ------------------------------------------------------------
+       import 'stark-ui-kit/lang-switch.css';
+
+   A two-option segmented control. Works with links (separate origins
+   per language) or buttons (client-side switch):
+
+     <div class="lang-switch">
+       <a href="…" aria-current="page">EN</a>
+       <span class="lang-sep" aria-hidden="true">/</span>
+       <a href="…">RU</a>
+     </div>
+
+   Mark the active option with aria-current="page" on a link, or
+   aria-pressed="true" on a button — the styling follows either. The
+   .lang-sep slash is only shown by the flat mobile treatment; include
+   it in the markup regardless, it stays hidden in the pill.
+
+   BREAKPOINTS ARE THE HOUSE ONES (frelikh.com, the reference
+   rendering): 900px swaps in a touch-sized hit area, 680px drops the
+   pill for a flat treatment. Override them in your own stylesheet if
+   your nav changes shape somewhere else.
+   ============================================================ */
+
+.lang-switch {
+  display: inline-flex; align-items: center;
+  font-family: var(--label-font);
+  font-size: var(--t-meta);
+  letter-spacing: 0.04em;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.lang-switch button,
+.lang-switch a {
+  padding: 6px 12px; color: var(--faint); font-weight: var(--label-weight);
+  transition: color var(--dur-fast) var(--ease-soft), background var(--dur-fast) var(--ease-soft); line-height: 1;
+  text-decoration: none;
+}
+.lang-switch button[aria-pressed="true"],
+.lang-switch a[aria-current="page"] { background: var(--ink); color: var(--ink-fg); }
+@media (hover: hover) {
+  .lang-switch button:hover:not([aria-pressed="true"]),
+  .lang-switch a:hover:not([aria-current="page"]) { color: var(--fg); }
+}
+/* slash divider — only used by the flat treatment below; hidden in the pill */
+.lang-sep { display: none; }
+
+@media (max-width: 900px) {
+  /* The pill IS a visible bordered/filled box, so it can't grow to 44px without
+     looking wrong. Keep it compact and extend each option's hit area with a
+     transparent overlay that spills above/below. overflow must be visible for the
+     overlay to be tappable, so the active fill re-creates the rounded end that
+     overflow:hidden used to clip. */
+  .lang-switch { overflow: visible; }
+  .lang-switch a { position: relative; }
+  .lang-switch a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
+  }
+  .lang-switch a:first-child[aria-current="page"] { border-radius: var(--r-pill) 0 0 var(--r-pill); }
+  .lang-switch a:last-child[aria-current="page"]  { border-radius: 0 var(--r-pill) var(--r-pill) 0; }
+}
+
+@media (max-width: 680px) {
+  /* Flat treatment: no pill — active language inked and underlined, inactive muted,
+     thin slash divider. The 900px block already gave each link a 44px transparent
+     hit overlay, so the visible text stays compact. */
+  .lang-switch { border: none; border-radius: 0; }
+  .lang-switch a {
+    padding: 6px 7px; color: var(--muted);
+    text-decoration: underline; text-decoration-color: transparent;
+    text-underline-offset: 4px; text-decoration-thickness: 1.5px;
+    transition: color var(--dur-fast) var(--ease-soft), text-decoration-color var(--dur-fast) var(--ease-soft);
+  }
+  .lang-switch a[aria-current="page"] { background: none; color: var(--ink); text-decoration-color: var(--ink); }
+  .lang-switch a:hover:not([aria-current="page"]) { color: var(--fg); }
+  .lang-sep { display: inline; color: var(--faint); }
+}
+
+/* Windows High Contrast flattens the palette, which would make the selected option
+   read identically to the other one. Restore just that distinction. */
+@media (forced-colors: active) {
+  .lang-switch a[aria-current="page"] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+}
