@@ -47,6 +47,7 @@
 @media (hover: hover) {
   .cmdk-hint:hover { color: var(--fg); border-color: var(--faint); }
 }
+.cmdk-hint:active { color: var(--fg); border-color: var(--faint); }
 .cmdk-key { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.02em; line-height: 1; white-space: nowrap; }
 
 .cmdk-overlay {

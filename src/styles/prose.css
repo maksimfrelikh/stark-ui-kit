@@ -64,6 +64,8 @@
 @media (hover: hover) {
   .prose a:hover::after { right: 0; }
 }
+/* pressed: the ink arrives at once rather than flowing — a press is an answer, not an offer */
+.prose a:active::after { right: 0; transition: none; }
 
 .prose ul { margin: 1em 0; }
 .prose ul li { position: relative; padding-left: 1.4em; margin: 0.5em 0; line-height: 1.6; }

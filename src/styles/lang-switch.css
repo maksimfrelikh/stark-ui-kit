@@ -44,6 +44,9 @@
   .lang-switch button:hover:not([aria-pressed="true"]),
   .lang-switch a:hover:not([aria-current="page"]) { color: var(--fg); }
 }
+.lang-switch button:active:not([aria-pressed="true"]),
+.lang-switch a:active:not([aria-current="page"]) { color: var(--fg); }
+
 /* slash divider — only used by the flat treatment below; hidden in the pill */
 .lang-sep { display: none; }
 

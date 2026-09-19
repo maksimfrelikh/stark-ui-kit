@@ -48,6 +48,12 @@ ul { list-style: none; }
      toward black in BOTH themes — a light wash over a light page reads as fog, not
      depth. It stays a contract so a consumer can still retune the depth. */
   --scrim: var(--brand-scrim, color-mix(in srgb, #000 58%, transparent));
+  /* Touch press feedback. WebKit paints this over the whole tapped element and the
+     platform default is a fixed ~18% black — heavier than this design language and
+     blind to the theme. Recoloured rather than switched off: the coverage is the
+     valuable part, it reaches every interactive element including ones added later,
+     and no enumeration can. */
+  --tap-highlight: var(--brand-tap-highlight, color-mix(in srgb, var(--fg) 10%, transparent));
 
   /* radius scale — theme-independent; keep new corners on these steps. */
   --r-xs:     2px;     /* hairline: focus ring, thin bars, inline tags */
@@ -110,6 +116,9 @@ ul { list-style: none; }
 }
 
 /* ---------- Base body ---------- */
+/* inherited, so one declaration covers every descendant */
+:root { -webkit-tap-highlight-color: var(--tap-highlight); }
+
 body {
   font-family: var(--font-body);
   background: var(--bg);

@@ -40,6 +40,10 @@
 @media (hover: hover) {
   .theme-toggle:hover { color: var(--fg); border-color: var(--faint); }
 }
+/* Pressed reads the same as hovered. Unconditional, not gated on hover:none — on a
+   pointer device hover has already taken it here, so this only ever adds the state
+   where there is no hover to provide it. */
+.theme-toggle:active { color: var(--fg); border-color: var(--faint); }
 
 /* the icon "flips" — same physics as an in-place copy-icon flip */
 .theme-toggle svg {

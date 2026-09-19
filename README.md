@@ -55,7 +55,8 @@ Tokens exposed: radii (`--r-xs/sm/md/pill/circle`), z-index ladder
 (`--z-below/nav/skip/overlay/modal`), motion (`--ease-out/-soft`, `--dur-fast/base/slow`),
 type scale (`--t-mega/h1/h2/h3/lead/body/meta`), weights (`--w-display/name/strong`),
 label system (`--label-case/track/font/weight`), rhythm (`--maxw`, `--gut`, `--scale`),
-`--scroll-shadow` for horizontally scrolling panels, and the semantic colour/font roles above. Base layer adds reset, `:focus-visible`,
+`--scroll-shadow` for horizontally scrolling panels, `--scrim` for overlay backdrops,
+`--tap-highlight` for the touch press wash, and the semantic colour/font roles above. Base layer adds reset, `:focus-visible`,
 `.sr-only`, `.skip-link`, themed scrollbars and `prefers-reduced-motion` /
 `prefers-contrast` handling.
 
@@ -96,6 +97,27 @@ match without extra work.
 > or an extracted design-system artefact: three divergent copies of these greys existed before
 > this file, and the high-contrast set is exactly where they drifted apart — one of them left
 > hairlines at 1.74:1, under the 3:1 that SC 1.4.11 asks of non-text contrast.
+
+## Two behaviours worth knowing
+
+**Theme switching should be a cut.** Flipping a theme is a change of context, not an
+interaction with a control, so cross-fading every themed property at once reads as a wash.
+The base layer zeroes all transitions while `data-theme-switching` is present on `<html>`:
+
+```ts
+html.setAttribute('data-theme-switching', '');
+html.setAttribute('data-theme', next);
+void getComputedStyle(html).backgroundColor;   // commit inside the window
+requestAnimationFrame(() => html.removeAttribute('data-theme-switching'));
+```
+
+**Touch gets a press state.** Every hover here is gated on `@media (hover: hover)`, so a
+phone would otherwise see nothing. Rather than switch `-webkit-tap-highlight-color` off and
+enumerate every interactive element, the kit recolours it through `--tap-highlight` — a
+monochrome wash derived from `--fg` instead of the platform's fixed ~18% black. Coverage
+stays complete, including elements added later. The kit's own controls additionally carry an
+`:active` mirroring their hover, unconditionally: on a pointer device hover has already
+taken them there, so it only adds the state where nothing else would.
 
 ## Utilities & hooks
 
