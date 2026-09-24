@@ -14,10 +14,12 @@
 
    Skip it and set your own --brand-* instead for a different look.
 
-   SOURCE OF TRUTH: frelikh.com (src/styles/app.css), verbatim and
-   without exception. That site is the reference rendering — every
-   value here is the one it ships, and its appearance does not move
-   to accommodate this file. Do not re-derive any of these from a
+   ORIGIN: frelikh.com (src/styles/app.css), lifted verbatim. That
+   site was the reference rendering and every value here started as
+   the one it shipped. The hosts have since stopped declaring any
+   palette of their own, so the direction is now reversed: THIS file
+   is the source, a value changes here first, and a host follows by
+   bumping its pin. Do not re-derive any of these from a
    screenshot, a mockup or an extracted design-system artefact:
    three divergent copies of these greys already existed before
    this file, and the high-contrast set is where they drifted.
@@ -37,7 +39,11 @@
 
   --brand-bg: #ffffff;
   --brand-fg: #0b0b0b;
-  --brand-muted: #6c6c6c;
+  /* #666666, not the #6c6c6c this palette arrived with: --muted is read
+     on surfaces tinted off --brand-bg, not just on it. The kit's own
+     .cmdk-item.active is --fg at 9%, i.e. #e9e9e9 here, where #6c6c6c is
+     4.32:1 and fails SC 1.4.3. #666666 gives 4.73:1 there, 5.74:1 on --bg. */
+  --brand-muted: #666666;
   --brand-faint: #767676;
   --brand-line: #e6e6e6;
   --brand-line-2: #d4d4d4;
