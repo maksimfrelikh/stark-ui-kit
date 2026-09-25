@@ -20,14 +20,12 @@
    palette of its own (it consumes this file and sets no --brand-*),
    so for it the direction is reversed: THIS file is the source, a
    value changes here first, and the host follows by bumping its pin.
-   hushsend has NOT adopted this file yet — it still ships its own
-   --brand-* in src/ui/theme.css against the kit's init commit, with
-   the older greys (--brand-muted #6c6c6c, a weaker high-contrast
-   set); moving it over is an open task in that repo. Do not
-   re-derive any of these from a screenshot, a mockup or an extracted
-   design-system artefact: three divergent copies of these greys
-   already existed before this file, and the high-contrast set is
-   where they drifted.
+   hushsend adopted this file on 2026-09-25 (pin 2a3f7ec) and deleted
+   its own --brand-* copy, so every consumer now reads the palette
+   from here. Do not re-derive any of these from a screenshot, a
+   mockup or an extracted design-system artefact: three divergent
+   copies of these greys existed before this file, and the
+   high-contrast set is where they drifted.
 
    THEME SELECTION
    - :root                        → light (the baseline)
@@ -60,10 +58,9 @@
 
   /* prefers-contrast: more — the kit swaps to these automatically.
      Ratios against --brand-bg, recorded so nobody has to re-derive them.
-     NOTE for anyone adopting this file: hushsend still carries its own
-     high-contrast greys with hairlines at 1.74:1 and borders at 2.38:1, both
-     under the 3:1 that SC 1.4.11 asks of non-text contrast. Moving onto this
-     palette fixes that. The change belongs to hushsend, not here. */
+     (hushsend's former hand-copied set had hairlines at 1.74:1 and borders
+     at 2.38:1, both under the 3:1 that SC 1.4.11 asks of non-text contrast;
+     it moved onto this palette on 2026-09-25.) */
   --brand-muted-contrast: #555555;    /*  7.46:1  AAA text       */
   --brand-faint-contrast: #595959;    /*  7.00:1  AAA text       */
   --brand-line-contrast: #8a8a8a;     /*  3.45:1  non-text rule  */

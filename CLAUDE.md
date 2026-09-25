@@ -25,7 +25,7 @@ all take it the same way.
 | repo | stack | pin (as of 2026-09-25) | takes |
 |---|---|---|---|
 | `frelikh` | Astro SSR | `2a3f7ec` = 0.3.0 | every stylesheet, `theme-mono.css`, `trapTab` / `lockScroll` / `copyToClipboard` |
-| `hushsend` | Vite + React | `b23a2e5` = 0.1.0 (pre-split) | `styles.css` + `copyToClipboard`; its own `--brand-*` in `src/ui/theme.css`. Moving it to `theme-mono.css` + `stark-ui-kit/react` is an open item in `hushsend/BACKLOG.md` |
+| `hushsend` | Vite + React | `2a3f7ec` = 0.3.0 (since 2026-09-25) | `styles.css` + `theme-mono.css` + `copyToClipboard`; declares no `--brand-*` of its own (its `theme.css` is gone). Ships `data-theme="light"` on `<html>` in `index.html`, so it never reaches the OS branch. The component stylesheets are not adopted yet — its `.hs-*` layer predates them |
 | quietkit | planned | — | spec: `~/projects/quietkit-spec.md` on laptop-server, § 4.2 |
 
 ## Rules
