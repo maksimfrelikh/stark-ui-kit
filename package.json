@@ -40,7 +40,8 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts src/react.ts --format esm,cjs --dts --external react",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "design-system": "node scripts/design-system.mjs"
   },
   "peerDependencies": {
     "react": ">=18"

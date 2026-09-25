@@ -174,3 +174,22 @@ page chunk grew from 4.9 KB to 13 KB).
 > only when called, never at module load — so they won't crash an SSR/server render. The DOM
 > work itself still has to run client-side, so call the utilities (and the hooks' effects)
 > in the browser.
+
+## Claude Design
+
+The system is published to Claude Design as the artifact **Stark**
+(https://claude.ai/artifact/Da7if9WhD7hxZjf5sL6m2F). It is *generated* from this repo, never
+edited on the page:
+
+```sh
+npm run design-system   # regenerates design-system/project/{tokens.json,components/bundle.css,design-system.json}
+```
+
+`tokens.json` carries exactly the `--brand-*` contract plus the structural scales, so the
+page's compiled `tokens.css` defines the same custom properties a host would and the kit's
+CSS runs unchanged in the previews (`components/bundle.css` is this package's stylesheets,
+verbatim). `README.md` and `components/*/` under `design-system/project/` are hand-written
+and committed. After a change here: commit → `npm run design-system` → republish the changed
+files to the same artifact url (from Claude Code) → bump the pins in the hosts. What the
+page's token grammar cannot hold (fluid `clamp()` sizes, motion, `color-mix()`) is listed in
+the artifact README's "Not synced" section.

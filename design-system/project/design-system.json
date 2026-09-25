@@ -1,0 +1,25 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-09-25T17:59:26.079Z"
+  },
+  "title": "Stark",
+  "namespace": "Stark",
+  "libraries": [],
+  "sections": {},
+  "groups": [],
+  "assetGroups": {},
+  "blobs": {},
+  "docs": {
+    "readme": "project/README.md",
+    "sections": []
+  },
+  "lastChange": {
+    "by": "Maksim Frelikh",
+    "at": "2026-09-25T17:59:26.079Z",
+    "via": "Claude Code · maksimfrelikh/stark-ui-kit@59914b0",
+    "note": "regenerated from stark-ui-kit@59914b0"
+  }
+}

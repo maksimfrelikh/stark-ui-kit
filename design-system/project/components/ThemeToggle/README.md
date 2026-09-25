@@ -1,0 +1,3 @@
+The light/dark toggle chip: a bordered square holding one half-filled circle that rotates 180° to show the other theme.
+
+Import `stark-ui-kit/theme-toggle.css`. Markup is a `button.theme-toggle` with one inline SVG (`viewBox 0 0 16 16`, 15×15) and `aria-pressed` kept in sync with "the light theme is active". The flip is a contract, not a selector: set `--theme-toggle-flip: 180deg` wherever LIGHT is active (frelikh: `[data-theme="white"]`; a light-by-default app: `:root`), so the icon is right on first paint with no snap once script runs. On coarse pointers the chip grows to 44×44. The host's script should apply the theme as a cut: set `data-theme-switching` on `<html>`, flip `data-theme`, force a style flush, remove the attribute on the next frame.
