@@ -1,6 +1,6 @@
 {
   "name": "stark-ui-kit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Portable design-token + base layer and headless UI utilities (focus trap, scroll lock, clipboard) with thin React hooks.",
   "type": "module",
   "license": "MIT",
@@ -27,7 +27,10 @@
     "./theme-toggle.css": "./src/styles/theme-toggle.css",
     "./lang-switch.css": "./src/styles/lang-switch.css",
     "./command-palette.css": "./src/styles/command-palette.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./controls.css": "./src/styles/controls.css",
+    "./links.css": "./src/styles/links.css",
+    "./layout.css": "./src/styles/layout.css"
   },
   "files": [
     "dist",
@@ -36,12 +39,14 @@
     "src/styles/prose.css",
     "src/styles/theme-toggle.css",
     "src/styles/lang-switch.css",
-    "src/styles/command-palette.css"
+    "src/styles/command-palette.css",
+    "src/styles/controls.css",
+    "src/styles/links.css",
+    "src/styles/layout.css"
   ],
   "scripts": {
     "build": "tsup src/index.ts src/react.ts --format esm,cjs --dts --external react",
-    "prepare": "npm run build",
-    "design-system": "node scripts/design-system.mjs"
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "react": ">=18"

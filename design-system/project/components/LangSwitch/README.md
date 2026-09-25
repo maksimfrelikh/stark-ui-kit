@@ -1,3 +1,0 @@
-A two-option segmented control for the language: a bordered pill whose active option is inverted into `brand-ink`.
-
-Import `stark-ui-kit/lang-switch.css`. Markup: `div.lang-switch` holding two links (separate origins per language) or two buttons, with `span.lang-sep` between them (a slash shown only by the flat mobile treatment — include it regardless). Mark the active option with `aria-current="page"` on a link or `aria-pressed="true"` on a button. Keep the visible label `RU` / `EN` but give the accessible name as the endonym with its `lang` (`Русский`, `English`) so speech synthesis reads it in the right voice. At ≤ 900 px each option gains a transparent 44 px hit overlay; at ≤ 680 px the pill drops for a flat, underlined treatment.

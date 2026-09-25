@@ -125,6 +125,9 @@ header describing the expected markup; the contracts a host must supply are list
 | `stark-ui-kit/theme-toggle.css` | the light/dark toggle chip (`.theme-toggle` + inline SVG) | set `--theme-toggle-flip: 180deg` wherever the LIGHT theme is active; keep `aria-pressed` in sync |
 | `stark-ui-kit/lang-switch.css` | two-option segmented control (`.lang-switch`, `.lang-sep`) | mark the active option with `aria-current="page"` (link) or `aria-pressed="true"` (button) |
 | `stark-ui-kit/command-palette.css` | ⌘K hint chip and palette surface (`.cmdk-*`) | behaviour is the host's: toggle the `hidden` attribute, keep `.cmdk-item.active` = `aria-activedescendant`, use `trapTab` / `lockScroll` below |
+| `stark-ui-kit/controls.css` | the two lozenge controls (`.pill` quiet, `.btn` strong), inverting into `--ink` on hover/press | none |
+| `stark-ui-kit/links.css` | the ink-underline mechanic (`.ink-link`, `.ink-link-rested`) for single-line links | pin the line for a current item from your own selector |
+| `stark-ui-kit/layout.css` | `.wrap` container and `.section` vertical rhythm (`--section-pad`) | override `--section-pad` per breakpoint |
 
 The breakpoints inside `lang-switch.css` and `command-palette.css` (900px, 680px, 480px)
 are the house ones from frelikh.com; override them in your own stylesheet if your nav
@@ -177,19 +180,9 @@ page chunk grew from 4.9 KB to 13 KB).
 
 ## Claude Design
 
-The system is published to Claude Design as the artifact **Stark**
-(https://claude.ai/artifact/Da7if9WhD7hxZjf5sL6m2F). It is *generated* from this repo, never
-edited on the page:
-
-```sh
-npm run design-system   # regenerates design-system/project/{tokens.json,components/bundle.css,design-system.json}
-```
-
-`tokens.json` carries exactly the `--brand-*` contract plus the structural scales, so the
-page's compiled `tokens.css` defines the same custom properties a host would and the kit's
-CSS runs unchanged in the previews (`components/bundle.css` is this package's stylesheets,
-verbatim). `README.md` and `components/*/` under `design-system/project/` are hand-written
-and committed. After a change here: commit → `npm run design-system` → republish the changed
-files to the same artifact url (from Claude Code) → bump the pins in the hosts. What the
-page's token grammar cannot hold (fluid `clamp()` sizes, motion, `color-mix()`) is listed in
-the artifact README's "Not synced" section.
+The design language this kit is the portable part of is published to Claude Design as the
+system **Stark** (https://claude.ai/artifact/Da7if9WhD7hxZjf5sL6m2F). It is generated from
+the reference site, `maksimfrelikh/frelikh` (`npm run design-system` there): the kit alone
+cannot carry the whole language — the site's header, hero, section rhythm and lists are
+part of it — so the system is built from the site with this kit's CSS inside it, verbatim.
+Change a value here → bump the site's pin → regenerate and republish from there.

@@ -1,0 +1,54 @@
+/* ============================================================
+   stark-ui-kit — controls (OPTIONAL)
+   ------------------------------------------------------------
+       import 'stark-ui-kit/controls.css';
+
+   Two lozenge controls, both bordered and both inverting into --ink
+   on hover / press. Works on <a> and <button> alike.
+
+     <a class="pill" href="…">GitHub ↗</a>       quiet: --line-2 border, --fg text
+     <a class="btn"  href="…">Download CV</a>   strong: --ink border, uppercase label
+
+   Pressed reads the same as hovered, unconditionally: on a pointer
+   device hover has already taken the control there, so :active only
+   adds the state where nothing else provides one (touch).
+   ============================================================ */
+
+.pill {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-family: var(--label-font); font-size: var(--t-meta);
+  letter-spacing: 0.02em;
+  border: 1px solid var(--line-2); border-radius: var(--r-pill);
+  padding: 9px 15px; color: var(--fg);
+  transition: background var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft);
+}
+@media (hover: hover) {
+  .pill:hover { background: var(--ink); color: var(--ink-fg); border-color: var(--ink); }
+}
+.pill:active { background: var(--ink); color: var(--ink-fg); border-color: var(--ink); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6em; margin-top: 0;
+  font-family: var(--label-font); font-size: var(--t-meta); letter-spacing: var(--label-track);
+  text-transform: var(--label-case); font-weight: var(--label-weight);
+  border: 1px solid var(--ink); border-radius: var(--r-pill); padding: 11px 20px;
+  white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft);
+}
+@media (hover: hover) { .btn:hover { background: var(--ink); color: var(--ink-fg); } }
+.btn:active { background: var(--ink); color: var(--ink-fg); }
+
+/* Both sit tight against their own border, so the base layer's 3px ring offset
+   would collide with it. */
+.pill:focus-visible,
+.btn:focus-visible { outline-offset: 2px; }
+
+/* Apple HIG (44pt) / Material (48dp) on coarse pointers only. */
+@media (pointer: coarse) {
+  .pill, .btn { min-height: 44px; }
+}
+
+/* Windows High Contrast flattens the inversion; restore the hover as a system pair. */
+@media (forced-colors: active) {
+  .pill:hover, .btn:hover { background: Highlight; color: HighlightText; }
+}

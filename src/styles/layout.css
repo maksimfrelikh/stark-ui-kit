@@ -1,0 +1,16 @@
+/* ============================================================
+   stark-ui-kit — layout (OPTIONAL)
+   ------------------------------------------------------------
+       import 'stark-ui-kit/layout.css';
+
+   The page container and the vertical rhythm of a section. Sections
+   are separated by air alone — no horizontal rules anywhere in
+   content; a two-column section may carry ONE vertical hairline.
+   Override --section-pad per breakpoint in your own stylesheet
+   (frelikh.com rebuilds the whole vertical scale at ≤680px).
+   ============================================================ */
+
+:root { --section-pad: clamp(64px, 8vh, 112px); }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gut); }
+.section { padding-block: var(--section-pad); position: relative; }
