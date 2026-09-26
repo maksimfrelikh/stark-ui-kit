@@ -3,8 +3,10 @@
    ------------------------------------------------------------
        import 'stark-ui-kit/lang-switch.css';
 
-   A two-option segmented control. Works with links (separate origins
-   per language) or buttons (client-side switch):
+   A two-option segmented control in the same chip language as
+   .theme-toggle and .cmdk-hint — a 1px --line-2 box with the --r-sm
+   corner — so the three nav controls read as one family. Works with
+   links (separate origins per language) or buttons (client-side switch):
 
      <div class="lang-switch">
        <a href="…" aria-current="page">EN</a>
@@ -15,11 +17,11 @@
    Mark the active option with aria-current="page" on a link, or
    aria-pressed="true" on a button — the styling follows either. The
    .lang-sep slash is only shown by the flat mobile treatment; include
-   it in the markup regardless, it stays hidden in the pill.
+   it in the markup regardless, it stays hidden in the box.
 
    BREAKPOINTS ARE THE HOUSE ONES (frelikh.com, the reference
    rendering): 900px swaps in a touch-sized hit area, 680px drops the
-   pill for a flat treatment. Override them in your own stylesheet if
+   box for a flat treatment. Override them in your own stylesheet if
    your nav changes shape somewhere else.
    ============================================================ */
 
@@ -29,7 +31,7 @@
   font-size: var(--t-meta);
   letter-spacing: 0.04em;
   border: 1px solid var(--line-2);
-  border-radius: var(--r-pill);
+  border-radius: var(--r-sm);
   overflow: hidden;
 }
 .lang-switch button,
@@ -47,15 +49,16 @@
 .lang-switch button:active:not([aria-pressed="true"]),
 .lang-switch a:active:not([aria-current="page"]) { color: var(--fg); }
 
-/* slash divider — only used by the flat treatment below; hidden in the pill */
+/* slash divider — only used by the flat treatment below; hidden in the box */
 .lang-sep { display: none; }
 
 @media (max-width: 900px) {
-  /* The pill IS a visible bordered/filled box, so it can't grow to 44px without
+  /* The switch IS a visible bordered/filled box, so it can't grow to 44px without
      looking wrong. Keep it compact and extend each option's hit area with a
      transparent overlay that spills above/below. overflow must be visible for the
      overlay to be tappable, so the active fill re-creates the rounded end that
-     overflow:hidden used to clip. */
+     overflow:hidden used to clip — concentric with the box: outer radius minus
+     the 1px border. */
   .lang-switch { overflow: visible; }
   .lang-switch a { position: relative; }
   .lang-switch a::after {
@@ -66,12 +69,12 @@
     height: 44px;
     transform: translateY(-50%);
   }
-  .lang-switch a:first-child[aria-current="page"] { border-radius: var(--r-pill) 0 0 var(--r-pill); }
-  .lang-switch a:last-child[aria-current="page"]  { border-radius: 0 var(--r-pill) var(--r-pill) 0; }
+  .lang-switch a:first-child[aria-current="page"] { border-radius: calc(var(--r-sm) - 1px) 0 0 calc(var(--r-sm) - 1px); }
+  .lang-switch a:last-child[aria-current="page"]  { border-radius: 0 calc(var(--r-sm) - 1px) calc(var(--r-sm) - 1px) 0; }
 }
 
 @media (max-width: 680px) {
-  /* Flat treatment: no pill — active language inked and underlined, inactive muted,
+  /* Flat treatment: no box — active language inked and underlined, inactive muted,
      thin slash divider. The 900px block already gave each link a 44px transparent
      hit overlay, so the visible text stays compact. */
   .lang-switch { border: none; border-radius: 0; }
