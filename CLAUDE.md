@@ -25,7 +25,7 @@ all take it the same way.
 | repo | stack | pin (as of 2026-09-26) | takes |
 |---|---|---|---|
 | `frelikh` | Astro SSR | `2a3f7ec` = 0.3.0 | every stylesheet, `theme-mono.css`, `trapTab` / `lockScroll` / `copyToClipboard` |
-| `hushsend` | Vite + React | `2a3f7ec` = 0.3.0 (since 2026-09-25) | `styles.css` + `theme-mono.css` + `copyToClipboard`; declares no `--brand-*` of its own (its `theme.css` is gone). Ships `data-theme="light"` on `<html>` in `index.html`, so it never reaches the OS branch. The component stylesheets are not adopted yet — its `.hs-*` layer predates them |
+| `hushsend` | Vite + React | `2a3f7ec` = 0.3.0 (since 2026-09-25) | `styles.css` + `theme-mono.css` + `controls.css` (`.pill`, with the app's geometry layered on top) + `theme-toggle.css` + `layout.css` (`.wrap`; its `--gut` is the design's 20 / 34 / 72 gutter) + `copyToClipboard`; declares no `--brand-*` of its own. Ships `data-theme="light"` on `<html>` in `index.html`, so it never reaches the OS branch. Screens redesigned from a Claude Design canvas on 2026-09-26; the rest stays in its `.hs-*` layer (candidates for promotion listed in `hushsend/BACKLOG.md` § stark-ui-kit componentization) |
 | quietkit | planned | — | spec: `~/projects/quietkit-spec.md` on laptop-server, § 4.2 |
 
 ## Rules
