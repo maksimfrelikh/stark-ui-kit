@@ -1,6 +1,6 @@
 {
   "name": "stark-ui-kit",
-  "version": "0.3.1",
+  "version": "0.3.0",
   "description": "Portable design-token + base layer and headless UI utilities (focus trap, scroll lock, clipboard) with thin React hooks.",
   "type": "module",
   "license": "MIT",

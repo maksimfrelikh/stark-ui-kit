@@ -24,7 +24,7 @@ all take it the same way.
 
 | repo | stack | pin (as of 2026-09-26) | takes |
 |---|---|---|---|
-| `frelikh` | Astro SSR | `444a3a9` = 0.3.1 (since 2026-09-26) | every stylesheet, `theme-mono.css`, `trapTab` / `lockScroll` / `copyToClipboard` |
+| `frelikh` | Astro SSR | `2a3f7ec` = 0.3.0 | every stylesheet, `theme-mono.css`, `trapTab` / `lockScroll` / `copyToClipboard` |
 | `hushsend` | Vite + React | `2a3f7ec` = 0.3.0 (since 2026-09-25) | `styles.css` + `theme-mono.css` + `copyToClipboard`; declares no `--brand-*` of its own (its `theme.css` is gone). Ships `data-theme="light"` on `<html>` in `index.html`, so it never reaches the OS branch. The component stylesheets are not adopted yet — its `.hs-*` layer predates them |
 | quietkit | planned | — | spec: `~/projects/quietkit-spec.md` on laptop-server, § 4.2 |
 
@@ -51,6 +51,10 @@ all take it the same way.
    `theme-mono.css`; the code here is the single source.
 7. Breakpoints inside the component stylesheets (900 / 680 / 480 px) are frelikh's; a host with
    a different nav shape overrides them in its own CSS rather than changing them here.
+8. **Shape carries meaning; keep the pill on `.lang-switch`.** Tried 2026-09-26 as 0.3.1
+   (`444a3a9`): the switch took the `--r-sm` box of `.theme-toggle` and `.cmdk-hint`, and the
+   three nav controls stopped reading as two actions plus one state indicator. Reverted the
+   same day, no consumer ever shipped it. Boxes are actions, pills are state.
 
 ## How a change travels
 
