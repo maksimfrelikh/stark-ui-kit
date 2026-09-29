@@ -73,7 +73,7 @@ change did not move the design is frelikh's visual-regression gate (`frelikh/vis
 
 ## Where the clones are
 
-Private GitHub repo `maksimfrelikh/stark-ui-kit`, not on the npm registry (`npm install
+Public GitHub repo `maksimfrelikh/stark-ui-kit` (public since 2026-09-29, MIT), not on the npm registry (`npm install
 stark-ui-kit` fetches an unrelated package). Clones: `~/projects/stark-ui-kit` on the owner's
 Mac and on laptop-server; both sync only through GitHub `main` — `git pull --ff-only` before
 editing on either machine.

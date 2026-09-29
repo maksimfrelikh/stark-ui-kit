@@ -13,7 +13,7 @@ theme ships alongside it (see below).
 
 ## Install
 
-The package is private and is not on the npm registry (`npm install stark-ui-kit` would
+The package is public on GitHub (MIT) but is not on the npm registry (`npm install stark-ui-kit` would
 fetch an unrelated package of the same name). Consumers depend on the GitHub repo, pinned
 by commit:
 
