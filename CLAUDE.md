@@ -17,16 +17,17 @@ frelikh repo** (`npm run design-system` there), not from here: the kit alone can
 full look. See `frelikh/CLAUDE.md` for the generator and the republish steps.
 
 Hosts on any stack consume the same package: the CSS is plain CSS, the root JS entry imports
-no framework. Astro (frelikh), React (hushsend) and, planned, a Svelte/other host (quietkit)
-all take it the same way.
+no framework. Astro SSR (frelikh), React (hushsend), Astro static + Svelte (quietkit) and a
+plain Node renderer (personal-news-page) all take it the same way.
 
 ## Consumers (pinned by commit — verify with `grep stark-ui-kit <repo>/package.json`)
 
-| repo | stack | pin (as of 2026-09-26) | takes |
+| repo | stack | pin (as of 2026-10-01) | takes |
 |---|---|---|---|
 | `frelikh` | Astro SSR | `2a3f7ec` = 0.3.0 | every stylesheet, `theme-mono.css`, `trapTab` / `lockScroll` / `copyToClipboard` |
 | `hushsend` | Vite + React | `2a3f7ec` = 0.3.0 (since 2026-09-25) | `styles.css` + `theme-mono.css` + `controls.css` (`.pill`, with the app's geometry layered on top) + `theme-toggle.css` + `layout.css` (`.wrap`; its `--gut` is the design's 20 / 34 / 72 gutter) + `copyToClipboard`; declares no `--brand-*` of its own. Ships `data-theme="light"` on `<html>` in `index.html`, so it never reaches the OS branch. Screens redesigned from a Claude Design canvas on 2026-09-26; the rest stays in its `.hs-*` layer (candidates for promotion listed in `hushsend/BACKLOG.md` § stark-ui-kit componentization) |
-| quietkit | planned | — | spec: `~/projects/quietkit-spec.md` on laptop-server, § 4.2 |
+| `quietkit` | Astro static + Svelte 5 | `eb52f41` (0.3.0 + docs; live at quietkit.frelikh.dev since 2026-09-29) | `styles.css` + `theme-mono.css` + the component stylesheets it needs, bundled at build time; rules in its `CLAUDE.md` § Rules (no colours / px / font sizes in tool components) |
+| `personal-news-page` | Node, static HTML | `2a3f7ec` = 0.3.0 | `styles.css` + `theme-mono.css` + `theme-toggle.css`, inlined into the page at render time (private repo) |
 
 ## Rules
 
