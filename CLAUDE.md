@@ -56,6 +56,13 @@ plain Node renderer (personal-news-page) all take it the same way.
    (`444a3a9`): the switch took the `--r-sm` box of `.theme-toggle` and `.cmdk-hint`, and the
    three nav controls stopped reading as two actions plus one state indicator. Reverted the
    same day, no consumer ever shipped it. Boxes are actions, pills are state.
+9. **Touch feedback is quiet, and it is the component's own.** The house palette sets
+   `--brand-tap-highlight: transparent` (0.3.2, 2026-10-03): WebKit's highlight covers the whole
+   tapped element the instant a finger lands, and on a full-width row the fg-10% wash read as a
+   flash on a real iPhone. The inversion of `.pill` / `.btn` is the HOVER language; on `(hover:
+   none)` their `:active` is the fg at 10%, applied with no transition. A new control gets a
+   press state of its own on the same terms — never the inversion on touch, never a transition
+   on the press.
 
 ## How a change travels
 

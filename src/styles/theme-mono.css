@@ -56,6 +56,15 @@
   /* edge fade for horizontally scrolling panels (code blocks, wide tables) */
   --brand-scroll-shadow: rgba(11, 11, 11, 0.13);
 
+  /* No system tap highlight in this house. Measured on an iPhone 15 (hushsend, 2026-10-03):
+     WebKit paints the highlight over the WHOLE tapped element the instant a finger lands,
+     and on a full-width row (a details summary, a disclosure) the fg-10% wash reads as a
+     flash across the row; on a .pill it stacked on the control's own press. Every kit
+     control carries its own press state (controls.css, theme-toggle.css, links.css,
+     lang-switch.css, command-palette.css), so the coverage the tokens.css default argues
+     for is already there without it. Theme-independent, so set once here. */
+  --brand-tap-highlight: transparent;
+
   /* prefers-contrast: more — the kit swaps to these automatically.
      Ratios against --brand-bg, recorded so nobody has to re-derive them.
      (hushsend's former hand-copied set had hairlines at 1.74:1 and borders

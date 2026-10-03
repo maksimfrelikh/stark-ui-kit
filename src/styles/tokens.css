@@ -50,9 +50,11 @@ ul { list-style: none; }
   --scrim: var(--brand-scrim, color-mix(in srgb, #000 58%, transparent));
   /* Touch press feedback. WebKit paints this over the whole tapped element and the
      platform default is a fixed ~18% black — heavier than this design language and
-     blind to the theme. Recoloured rather than switched off: the coverage is the
-     valuable part, it reaches every interactive element including ones added later,
-     and no enumeration can. */
+     blind to the theme. The brand-free default recolours it rather than switching it
+     off, so a host whose controls have no press state of their own still gets one on
+     every interactive element. The house palette (theme-mono.css) sets it to
+     transparent: the kit's own controls all carry a press state, and on a phone the
+     wash over a whole row read as a flash (hushsend on an iPhone 15, 2026-10-03). */
   --tap-highlight: var(--brand-tap-highlight, color-mix(in srgb, var(--fg) 10%, transparent));
 
   /* radius scale — theme-independent; keep new corners on these steps. */

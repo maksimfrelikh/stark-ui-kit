@@ -125,7 +125,7 @@ header describing the expected markup; the contracts a host must supply are list
 | `stark-ui-kit/theme-toggle.css` | the light/dark toggle chip (`.theme-toggle` + inline SVG) | set `--theme-toggle-flip: 180deg` wherever the LIGHT theme is active; keep `aria-pressed` in sync |
 | `stark-ui-kit/lang-switch.css` | two-option segmented control (`.lang-switch`, `.lang-sep`) | mark the active option with `aria-current="page"` (link) or `aria-pressed="true"` (button) |
 | `stark-ui-kit/command-palette.css` | ⌘K hint chip and palette surface (`.cmdk-*`) | behaviour is the host's: toggle the `hidden` attribute, keep `.cmdk-item.active` = `aria-activedescendant`, use `trapTab` / `lockScroll` below |
-| `stark-ui-kit/controls.css` | the two lozenge controls (`.pill` quiet, `.btn` strong), inverting into `--ink` on hover/press | none |
+| `stark-ui-kit/controls.css` | the two lozenge controls (`.pill` quiet, `.btn` strong), inverting into `--ink` on hover; on touch a quiet fg-10% press instead (0.3.2) | none |
 | `stark-ui-kit/links.css` | the ink-underline mechanic (`.ink-link`, `.ink-link-rested`) for single-line links | pin the line for a current item from your own selector |
 | `stark-ui-kit/layout.css` | `.wrap` container and `.section` vertical rhythm (`--section-pad`) | override `--section-pad` per breakpoint |
 

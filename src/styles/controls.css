@@ -9,9 +9,14 @@
      <a class="pill" href="…">GitHub ↗</a>       quiet: --line-2 border, --fg text
      <a class="btn"  href="…">Download CV</a>   strong: --ink border, uppercase label
 
-   Pressed reads the same as hovered, unconditionally: on a pointer
-   device hover has already taken the control there, so :active only
-   adds the state where nothing else provides one (touch).
+   The inversion is the HOVER language. On a pointer device the press
+   reads the same as the hover that already holds the control, so the
+   :active rule there changes nothing visible. On a finger there is no
+   hover, and the full inversion faded in and out over --dur-fast was a
+   black flash for the length of the touch (hushsend on an iPhone 15,
+   2026-10-03) — so touch gets a QUIET press instead: the fg at 10%,
+   applied instantly. The house palette also turns the system tap
+   highlight off (theme-mono.css), so the press is the one feedback.
    ============================================================ */
 
 .pill {
@@ -23,9 +28,12 @@
   transition: background var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft);
 }
 @media (hover: hover) {
-  .pill:hover { background: var(--ink); color: var(--ink-fg); border-color: var(--ink); }
+  .pill:hover,
+  .pill:active { background: var(--ink); color: var(--ink-fg); border-color: var(--ink); }
 }
-.pill:active { background: var(--ink); color: var(--ink-fg); border-color: var(--ink); }
+@media (hover: none) {
+  .pill:active { background: color-mix(in srgb, var(--fg) 10%, transparent); transition: none; }
+}
 
 .btn {
   display: inline-flex; align-items: center; gap: 0.6em; margin-top: 0;
@@ -35,8 +43,13 @@
   white-space: nowrap;
   transition: background var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft);
 }
-@media (hover: hover) { .btn:hover { background: var(--ink); color: var(--ink-fg); } }
-.btn:active { background: var(--ink); color: var(--ink-fg); }
+@media (hover: hover) {
+  .btn:hover,
+  .btn:active { background: var(--ink); color: var(--ink-fg); }
+}
+@media (hover: none) {
+  .btn:active { background: color-mix(in srgb, var(--fg) 10%, transparent); transition: none; }
+}
 
 /* Both sit tight against their own border, so the base layer's 3px ring offset
    would collide with it. */
