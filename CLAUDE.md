@@ -22,7 +22,7 @@ plain Node renderer (personal-news-page) all take it the same way.
 
 ## Consumers (pinned by commit — verify with `grep stark-ui-kit <repo>/package.json`)
 
-| repo | stack | pin (as of 2026-10-01) | takes |
+| repo | stack | pin (each checked against its `package.json` 2026-10-11) | takes |
 |---|---|---|---|
 | `frelikh` | Astro SSR | `f9d9250` = 0.3.2 (since 2026-10-03, `7634e4c`; verify + visual green, design-system regenerated, Stark republished) | every stylesheet, `theme-mono.css`, `trapTab` / `lockScroll` / `copyToClipboard` |
 | `hushsend` | Vite + React | `f9d9250` = 0.3.2 (since 2026-10-03; the quiet touch press came from its iPhone pass) | `styles.css` + `theme-mono.css` + `controls.css` (`.pill`, with the app's geometry layered on top) + `theme-toggle.css` + `layout.css` (`.wrap`; its `--gut` is the design's 20 / 34 / 72 gutter) + `copyToClipboard`; declares no `--brand-*` of its own. Ships `data-theme="light"` on `<html>` in `index.html`, so it never reaches the OS branch. Screens redesigned from a Claude Design canvas on 2026-09-26; the rest stays in its `.hs-*` layer (candidates for promotion listed in `hushsend/BACKLOG.md` § stark-ui-kit componentization) |
