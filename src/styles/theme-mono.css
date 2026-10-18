@@ -1,0 +1,132 @@
+/* ============================================================
+   stark-ui-kit — monochrome brand theme (OPTIONAL)
+   ------------------------------------------------------------
+   The kit core ships structure only and reads every colour /
+   font through var(--brand-*, <generic fallback>). This file is
+   one concrete filling of that contract: the strictly MONOCHROME
+   palette — black / white / grey, NO accent colour, which is a
+   deliberate design decision, not an omission.
+
+   Import it AFTER the core if you want the house palette:
+
+       import 'stark-ui-kit/styles.css';
+       import 'stark-ui-kit/theme-mono.css';
+
+   Skip it and set your own --brand-* instead for a different look.
+
+   ORIGIN: the author's reference site, lifted verbatim. Every value
+   here started as the one that site shipped; the site has since
+   stopped declaring any palette of its own (it consumes this file and
+   sets no --brand-*), so the direction is reversed: THIS file is the
+   source, a value changes here first, and every host follows by
+   bumping its pin. No consumer keeps a hand-copied --brand-* set. Do not re-derive any of these from a screenshot, a
+   mockup or an extracted design-system artefact: three divergent
+   copies of these greys existed before this file, and the
+   high-contrast set is where they drifted.
+
+   THEME SELECTION
+   - :root                        → light (the baseline)
+   - [data-theme="dark"]          → dark
+   - no data-theme at all         → follow the OS preference
+   A host that always writes data-theme (as the reference site does) never
+   reaches the OS branch, so adopting this file cannot change its
+   boot theme.
+   ============================================================ */
+
+/* ---------- Light (baseline) ---------- */
+:root {
+  color-scheme: light;
+
+  --brand-bg: #ffffff;
+  --brand-fg: #0b0b0b;
+  /* #666666, not the #6c6c6c this palette arrived with: --muted is read
+     on surfaces tinted off --brand-bg, not just on it. The kit's own
+     .cmdk-item.active is --fg at 9%, i.e. #e9e9e9 here, where #6c6c6c is
+     4.32:1 and fails SC 1.4.3. #666666 gives 4.73:1 there, 5.74:1 on --bg. */
+  --brand-muted: #666666;
+  --brand-faint: #767676;
+  --brand-line: #e6e6e6;
+  --brand-line-2: #d4d4d4;
+  --brand-ink: #0b0b0b;      /* strong rules / inverted blocks / hover fill */
+  --brand-ink-fg: #ffffff;   /* text on --ink */
+
+  /* edge fade for horizontally scrolling panels (code blocks, wide tables) */
+  --brand-scroll-shadow: rgba(11, 11, 11, 0.13);
+
+  /* No system tap highlight in this house. Measured on an iPhone 15 (a consumer app, 2026-10-03):
+     WebKit paints the highlight over the WHOLE tapped element the instant a finger lands,
+     and on a full-width row (a details summary, a disclosure) the fg-10% wash reads as a
+     flash across the row; on a .pill it stacked on the control's own press. Every kit
+     control carries its own press state (controls.css, theme-toggle.css, links.css,
+     lang-switch.css, command-palette.css), so the coverage the tokens.css default argues
+     for is already there without it. Theme-independent, so set once here. */
+  --brand-tap-highlight: transparent;
+
+  /* prefers-contrast: more — the kit swaps to these automatically.
+     Ratios against --brand-bg, recorded so nobody has to re-derive them.
+     (A consumer's former hand-copied set had hairlines at 1.74:1 and borders
+     at 2.38:1, both under the 3:1 that SC 1.4.11 asks of non-text contrast;
+     it moved onto this palette in 2026-09.) */
+  --brand-muted-contrast: #555555;    /*  7.46:1  AAA text       */
+  --brand-faint-contrast: #595959;    /*  7.00:1  AAA text       */
+  --brand-line-contrast: #8a8a8a;     /*  3.45:1  non-text rule  */
+  --brand-line-2-contrast: #6e6e6e;   /*  5.10:1  control border */
+
+  /* font ROLES. Latin stays Archivo; "Onest Variable" follows so the browser
+     picks it up by unicode-range for Cyrillic only. "Archivo Fallback" is a
+     metric-matched local face against swap CLS — the consumer must declare it
+     (as the reference site does) or the stack simply falls through it. */
+  --brand-font-grotesk: "Archivo Variable", "Archivo", "Onest Variable", "Archivo Fallback", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --brand-font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+/* ---------- Dark ---------- */
+/* Not an inversion of light: the greys are re-picked, and the scroll shadow
+   becomes a light glow because a dark shadow is invisible on #000. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --brand-bg: #000000;
+  --brand-fg: #f2f2f2;
+  --brand-muted: #8c8c90;
+  --brand-faint: #7a7a7e;
+  --brand-line: #1b1b1d;
+  --brand-line-2: #2c2c30;
+  --brand-ink: #f2f2f2;
+  --brand-ink-fg: #000000;
+
+  --brand-scroll-shadow: rgba(242, 242, 242, 0.16);
+
+  /* ratios against --brand-bg #000000 */
+  --brand-muted-contrast: #b4b4b8;    /* 10.16:1  AAA text       */
+  --brand-faint-contrast: #a4a4a8;    /*  8.45:1  AAA text       */
+  --brand-line-contrast: #5a5a5e;     /*  3.06:1  non-text rule — tight, do not lower */
+  --brand-line-2-contrast: #707074;   /*  4.26:1  control border */
+}
+
+/* ---------- Dark by OS preference ---------- */
+/* Only for hosts that leave data-theme unset until the user picks. Kept as a
+   duplicate block rather than a shared custom-property list because the two
+   selectors must stay independently overridable. Keep it in sync with the
+   [data-theme="dark"] block above. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --brand-bg: #000000;
+    --brand-fg: #f2f2f2;
+    --brand-muted: #8c8c90;
+    --brand-faint: #7a7a7e;
+    --brand-line: #1b1b1d;
+    --brand-line-2: #2c2c30;
+    --brand-ink: #f2f2f2;
+    --brand-ink-fg: #000000;
+
+    --brand-scroll-shadow: rgba(242, 242, 242, 0.16);
+
+    --brand-muted-contrast: #b4b4b8;
+    --brand-faint-contrast: #a4a4a8;
+    --brand-line-contrast: #5a5a5e;
+    --brand-line-2-contrast: #707074;
+  }
+}

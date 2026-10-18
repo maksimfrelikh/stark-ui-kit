@@ -1,0 +1,33 @@
+/* ============================================================
+   stark-ui-kit — ink links (OPTIONAL)
+   ------------------------------------------------------------
+       import 'stark-ui-kit/links.css';
+
+   The one link mechanic of the system: an ink line flows in from the
+   left on hover (::after, right: 100% → 0), lands at once on press.
+   Single-line links only — ::after cannot follow a wrapped line; a
+   two-line title uses text-decoration instead.
+
+     <a class="ink-link" href="…">Projects</a>          rests bare — the line IS the affordance
+     <a class="ink-link ink-link-rested" href="…">…</a> rests on a quiet --line-2 rule (2px), the
+                                                        ink flows over it — for a big CTA
+   To pin the line (a current nav item), set `right: 0` on ::after from
+   your own selector, e.g. `.nav-link[aria-current="true"]::after`.
+   Prose links get the same mechanic from prose.css; that markup comes
+   from Markdown and cannot carry a class.
+   ============================================================ */
+
+.ink-link { position: relative; }
+.ink-link::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px;
+  background: var(--ink);
+  transition: right var(--dur-base) var(--ease-out);
+}
+@media (hover: hover) {
+  .ink-link:hover::after { right: 0; }
+}
+/* pressed: the ink arrives at once rather than flowing — a press is an answer, not an offer */
+.ink-link:active::after { right: 0; transition: none; }
+
+.ink-link-rested { box-shadow: inset 0 -2px 0 var(--line-2); }
+.ink-link-rested::after { height: 2px; }

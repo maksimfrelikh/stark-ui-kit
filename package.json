@@ -1,0 +1,68 @@
+{
+  "name": "stark-ui-kit",
+  "version": "0.3.2",
+  "description": "Portable design-token + base layer and headless UI utilities (focus trap, scroll lock, clipboard) with thin React hooks.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    },
+    "./styles.css": "./src/styles/tokens.css",
+    "./theme-mono.css": "./src/styles/theme-mono.css",
+    "./prose.css": "./src/styles/prose.css",
+    "./theme-toggle.css": "./src/styles/theme-toggle.css",
+    "./lang-switch.css": "./src/styles/lang-switch.css",
+    "./command-palette.css": "./src/styles/command-palette.css",
+    "./package.json": "./package.json",
+    "./controls.css": "./src/styles/controls.css",
+    "./links.css": "./src/styles/links.css",
+    "./layout.css": "./src/styles/layout.css"
+  },
+  "files": [
+    "dist",
+    "src/styles/tokens.css",
+    "src/styles/theme-mono.css",
+    "src/styles/prose.css",
+    "src/styles/theme-toggle.css",
+    "src/styles/lang-switch.css",
+    "src/styles/command-palette.css",
+    "src/styles/controls.css",
+    "src/styles/links.css",
+    "src/styles/layout.css"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts src/react.ts --format esm,cjs --dts --external react",
+    "prepare": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "tsup": "^8",
+    "typescript": "^6.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maksimfrelikh/stark-ui-kit.git"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  }
+}

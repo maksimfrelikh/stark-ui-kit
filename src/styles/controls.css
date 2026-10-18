@@ -1,0 +1,67 @@
+/* ============================================================
+   stark-ui-kit — controls (OPTIONAL)
+   ------------------------------------------------------------
+       import 'stark-ui-kit/controls.css';
+
+   Two lozenge controls, both bordered and both inverting into --ink
+   on hover / press. Works on <a> and <button> alike.
+
+     <a class="pill" href="…">GitHub ↗</a>       quiet: --line-2 border, --fg text
+     <a class="btn"  href="…">Download CV</a>   strong: --ink border, uppercase label
+
+   The inversion is the HOVER language. On a pointer device the press
+   reads the same as the hover that already holds the control, so the
+   :active rule there changes nothing visible. On a finger there is no
+   hover, and the full inversion faded in and out over --dur-fast was a
+   black flash for the length of the touch (a consumer app on an iPhone 15,
+   2026-10-03) — so touch gets a QUIET press instead: the fg at 10%,
+   applied instantly. The house palette also turns the system tap
+   highlight off (theme-mono.css), so the press is the one feedback.
+   ============================================================ */
+
+.pill {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-family: var(--label-font); font-size: var(--t-meta);
+  letter-spacing: 0.02em;
+  border: 1px solid var(--line-2); border-radius: var(--r-pill);
+  padding: 9px 15px; color: var(--fg);
+  transition: background var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft);
+}
+@media (hover: hover) {
+  .pill:hover,
+  .pill:active { background: var(--ink); color: var(--ink-fg); border-color: var(--ink); }
+}
+@media (hover: none) {
+  .pill:active { background: color-mix(in srgb, var(--fg) 10%, transparent); transition: none; }
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6em; margin-top: 0;
+  font-family: var(--label-font); font-size: var(--t-meta); letter-spacing: var(--label-track);
+  text-transform: var(--label-case); font-weight: var(--label-weight);
+  border: 1px solid var(--ink); border-radius: var(--r-pill); padding: 11px 20px;
+  white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft);
+}
+@media (hover: hover) {
+  .btn:hover,
+  .btn:active { background: var(--ink); color: var(--ink-fg); }
+}
+@media (hover: none) {
+  .btn:active { background: color-mix(in srgb, var(--fg) 10%, transparent); transition: none; }
+}
+
+/* Both sit tight against their own border, so the base layer's 3px ring offset
+   would collide with it. */
+.pill:focus-visible,
+.btn:focus-visible { outline-offset: 2px; }
+
+/* Apple HIG (44pt) / Material (48dp) on coarse pointers only. */
+@media (pointer: coarse) {
+  .pill, .btn { min-height: 44px; }
+}
+
+/* Windows High Contrast flattens the inversion; restore the hover as a system pair. */
+@media (forced-colors: active) {
+  .pill:hover, .btn:hover { background: Highlight; color: HighlightText; }
+}
