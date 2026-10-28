@@ -11,11 +11,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": true,
-    "noEmit": true,
-    // tsup 8 passes baseUrl "." to its own DTS build (node_modules/tsup/dist/rollup.js), and
-    // TypeScript 6 reports that option as deprecated. Our config sets no baseUrl; this silences
-    // the one tsup injects. Drop it together with tsup when the build moves to tsdown.
-    "ignoreDeprecations": "6.0"
+    "noEmit": true
   },
   "include": ["src"]
 }
